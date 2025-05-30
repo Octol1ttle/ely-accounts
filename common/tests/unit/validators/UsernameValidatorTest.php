@@ -37,7 +37,7 @@ class UsernameValidatorTest extends TestCase {
         $this->validator->validateAttribute($model, 'field');
         $this->assertSame(['error.username_too_short'], $model->getErrors('field'));
 
-        $model = $this->createModel('erickskrauch_erickskrauch');
+        $model = $this->createModel('mcmodder_mcmodder');
         $this->validator->validateAttribute($model, 'field');
         $this->assertSame(['error.username_too_long'], $model->getErrors('field'));
 
@@ -50,8 +50,8 @@ class UsernameValidatorTest extends TestCase {
     // TODO: rewrite this test with @provider usage
     public function testValidateAttributePattern(): void {
         $shouldBeValid = [
-            'русский_ник', 'русский_ник_на_грани!', 'numbers1132', '*__*-Stars-*__*', '1-_.!$%^&*()[]',
-            '[ESP]Эрик', 'Свят_помидор;', 'зроблена_ў_беларусі:)',
+            'русский_ник', 'by_ник_на_грани!', 'numbers1132', '*__*-Stars-*__*', '1-_.!$%^&*()[]',
+            '[ESP]Эрик', 'Свят_помидор;',
         ];
         foreach ($shouldBeValid as $nickname) {
             $model = $this->createModel($nickname);

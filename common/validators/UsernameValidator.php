@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace common\validators;
 
 use Closure;
@@ -26,9 +28,11 @@ class UsernameValidator extends Validator {
         $required = new validators\RequiredValidator();
         $required->message = E::USERNAME_REQUIRED;
 
+        // Using username longer than 16 characters causes the "Failed to encode client:hello" error
+        // during server authentication on Minecraft 1.20 and above
         $length = new validators\StringValidator();
         $length->min = 3;
-        $length->max = 21;
+        $length->max = 16;
         $length->tooShort = E::USERNAME_TOO_SHORT;
         $length->tooLong = E::USERNAME_TOO_LONG;
 
@@ -54,7 +58,7 @@ class UsernameValidator extends Validator {
         return null;
     }
 
-    protected function executeValidation(Validator $validator, Model $model, string $attribute) {
+    protected function executeValidation(Validator $validator, Model $model, string $attribute): bool {
         $validator->validateAttribute($model, $attribute);
 
         return !$model->hasErrors($attribute);
